@@ -1,0 +1,25 @@
+{
+  "name": "greeting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-lambda": "webpack",
+    "zip-build-lambda": "cd bin && zip -r ./index.zip ./index.js",
+    "upload-to-s3": "aws s3 cp bin/index.zip s3://mantczak-cf-test/index.zip",
+    "deploy-lambda": "aws lambda update-function-code --function-name greetings --s3-bucket mantczak-cf-test --s3-key index.zip --publish",
+    "deploy": "npm run build-lambda && npm run zip-build-lambda && npm run upload-to-s3 && npm run deploy-lambda"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "luxon": "^2.0.2",
+    "zip-a-folder": "^1.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
